@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- ═══ SEO ═══ -->
+<title>Pico de Choro do Bebê — Simulador com Gráfico | Período PURPLE</title>
+<meta name="description" content="Descubra quando seu bebê vai ter o pico de choro. Informe a data de nascimento e as semanas de gestação e veja um gráfico personalizado com as datas exatas do período PURPLE. Funciona para bebês prematuros e a termo.">
+<meta name="keywords" content="pico de choro do bebê, período PURPLE, bebê chora muito, choro bebê 2 meses, bebê prematuro choro, simulador pico de choro, quando bebê para de chorar, período PURPLE bebê prematuro, choro bebê semanas">
+<meta name="author" content="Simulador Pico de Choro">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://picodechoro.com.br/">
+
+<!-- ═══ Open Graph (WhatsApp, Facebook) ═══ -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Pico de Choro do Bebê — Simulador com Gráfico">
+<meta property="og:description" content="Saiba exatamente quando esperar o pico de choro do seu bebê. Gráfico personalizado com datas reais. Funciona para prematuros.">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Simulador Pico de Choro">
+
+<!-- ═══ Twitter Card ═══ -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pico de Choro do Bebê — Simulador com Gráfico">
+<meta name="twitter:description" content="Descubra quando seu bebê vai ter o pico de choro. Gráfico personalizado com datas reais do período PURPLE.">
+
+<!-- ═══ Schema.org Structured Data ═══ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Simulador do Pico de Choro do Bebê",
+  "description": "Ferramenta para calcular e visualizar graficamente o período PURPLE — o pico de choro em bebês de 0 a 4 meses. Compatível com bebês prematuros usando cálculo de idade corrigida.",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "All",
+  "inLanguage": "pt-BR",
+  "audience": {
+    "@type": "PeopleAudience",
+    "audienceType": "Pais, mães, pediatras, cuidadores de bebês"
+  },
+  "about": {
+    "@type": "MedicalCondition",
+    "name": "Período PURPLE — Pico de Choro em Bebês",
+    "description": "Fase fisiológica normal em que bebês saudáveis choram mais intensamente, geralmente entre 6 e 8 semanas de idade corrigida."
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "Simulador Pico de Choro"
+  }
+}
+</script>
+
+<!-- ═══ FAQ Schema ═══ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "O que é o pico de choro do bebê?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "O pico de choro é uma fase fisiológica normal chamada Período PURPLE, em que bebês saudáveis choram mais do que em qualquer outro momento da vida. Ocorre por volta das 6 a 8 semanas de idade corrigida e tem fim garantido."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quando começa o pico de choro do bebê?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "O pico de choro começa por volta das 6 semanas de idade corrigida e atinge o máximo entre 6 e 8 semanas. Para bebês nascidos a termo, isso ocorre entre 6 e 8 semanas de vida. Para prematuros, o cálculo é feito pela idade corrigida."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "O pico de choro se aplica a bebês prematuros?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sim. Para bebês prematuros, o pico de choro ocorre com base na idade corrigida, não na idade cronológica. Um bebê nascido com 34 semanas terá o pico cerca de 6 semanas depois do que seria esperado para um bebê a termo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Quando termina o pico de choro?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "O período PURPLE encerra por volta das 16 semanas de idade corrigida, geralmente entre 3 e 4 meses de idade. Após isso, o choro diminui e o bebê começa a sorrir e se comunicar com mais frequência."
+      }
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --sky:      #38BDF8;
+  --sky-dark: #0EA5E9;
+  --teal:     #2DD4BF;
+  --sun:      #FCD34D;
+  --coral:    #FB923C;
+  --pink:     #F472B6;
+  --lilac:    #A78BFA;
+  --green:    #34D399;
+
+  --hero-from: #0EA5E9;
+  --hero-to:   #2DD4BF;
+
+  --peak-c:   #F97316;
+  --peak-lt:  #FFF3E8;
+  --purple-c: #8B5CF6;
+  --purple-lt:#F3F0FF;
+  --teal-c:   #0D9488;
+  --teal-lt:  #E6F7F6;
+  --amber-c:  #D97706;
+  --amber-lt: #FFFBEB;
+  --blue-c:   #2563EB;
+  --blue-lt:  #EFF6FF;
+  --gray-c:   #64748B;
+
+  --bg:       #F8FAFC;
+  --surface:  #FFFFFF;
+  --text:     #1E293B;
+  --text-2:   #475569;
+  --text-3:   #94A3B8;
+  --border:   #E2E8F0;
+  --radius:   16px;
+  --shadow-sm:0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
+  --shadow:   0 4px 24px rgba(0,0,0,.08);
+  --shadow-lg:0 10px 40px rgba(0,0,0,.10);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Lato', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ══════════════════════════════════
+   HERO
+══════════════════════════════════ */
+.hero {
+  background: linear-gradient(135deg, var(--hero-from) 0%, var(--hero-to) 100%);
+  padding: clamp(48px, 8vw, 80px) 20px clamp(64px, 10vw, 96px);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* bolhas decorativas */
+.hero::before, .hero::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  opacity: .18;
+  pointer-events: none;
+}
+.hero::before {
+  width: clamp(180px, 35vw, 340px);
+  height: clamp(180px, 35vw, 340px);
+  background: var(--sun);
+  top: -60px; right: -60px;
+}
+.hero::after {
+  width: clamp(120px, 25vw, 240px);
+  height: clamp(120px, 25vw, 240px);
+  background: var(--pink);
+  bottom: -40px; left: -40px;
+}
+
+.hero-bubble {
+  position: absolute;
+  border-radius: 50%;
+  opacity: .12;
+  pointer-events: none;
+}
+.hero-bubble.b1 { width:80px; height:80px; background:var(--lilac); top:30%; left:8%; animation: float 6s ease-in-out infinite; }
+.hero-bubble.b2 { width:50px; height:50px; background:var(--green); top:20%; right:15%; animation: float 8s ease-in-out infinite .5s; }
+.hero-bubble.b3 { width:36px; height:36px; background:var(--sun);   bottom:25%; right:10%; animation: float 7s ease-in-out infinite 1s; }
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-14px); }
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,.25);
+  border: 1px solid rgba(255,255,255,.45);
+  border-radius: 40px;
+  padding: 5px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: white;
+  margin-bottom: 20px;
+  backdrop-filter: blur(4px);
+}
+
+.hero h1 {
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(1.9rem, 6vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: white;
+  margin-bottom: 14px;
+  text-shadow: 0 2px 12px rgba(0,0,0,.12);
+}
+.hero h1 .accent {
+  background: linear-gradient(90deg, var(--sun), #FFF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero p {
+  font-size: clamp(14px, 2.5vw, 16px);
+  color: rgba(255,255,255,.88);
+  max-width: 500px;
+  margin: 0 auto 24px;
+  line-height: 1.75;
+}
+
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: clamp(16px, 4vw, 36px);
+  flex-wrap: wrap;
+}
+.hero-stat {
+  background: rgba(255,255,255,.2);
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 12px;
+  padding: 10px 18px;
+  text-align: center;
+  backdrop-filter: blur(4px);
+}
+.hero-stat strong {
+  display: block;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: white;
+  line-height: 1;
+}
+.hero-stat span {
+  font-size: 11px;
+  color: rgba(255,255,255,.8);
+  margin-top: 3px;
+  display: block;
+}
+
+/* ══════════════════════════════════
+   CONTAINER
+══════════════════════════════════ */
+.container {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 16px 72px;
+}
+
+/* ══════════════════════════════════
+   FORMULÁRIO
+══════════════════════════════════ */
+.form-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  padding: clamp(24px, 5vw, 40px) clamp(20px, 5vw, 36px);
+  margin-top: -40px;
+  position: relative;
+  z-index: 10;
+  border: 1px solid var(--border);
+}
+
+.form-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.form-icon {
+  width: 42px; height: 42px;
+  background: linear-gradient(135deg, var(--sky-dark), var(--teal));
+  border-radius: 12px;
+  display: grid; place-items: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.form-card-header h2 {
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text);
+}
+.form-card-header p {
+  font-size: 13px;
+  color: var(--text-3);
+  margin-top: 2px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.field { display: flex; flex-direction: column; gap: 6px; }
+
+.field label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.field input, .field select {
+  height: 50px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 0 14px;
+  font-family: 'Lato', sans-serif;
+  font-size: 15px;
+  color: var(--text);
+  background: var(--bg);
+  outline: none;
+  transition: border-color .2s, box-shadow .2s, background .2s;
+  appearance: none;
+  width: 100%;
+}
+.field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+.field input:focus, .field select:focus {
+  border-color: var(--sky-dark);
+  box-shadow: 0 0 0 3px rgba(14,165,233,.15);
+  background: white;
+}
+
+.field .hint {
+  font-size: 11.5px;
+  color: var(--text-3);
+  line-height: 1.5;
+}
+
+.btn {
+  margin-top: 20px;
+  width: 100%;
+  height: 54px;
+  background: linear-gradient(135deg, var(--sky-dark) 0%, var(--teal) 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: opacity .2s, transform .12s, box-shadow .2s;
+  letter-spacing: .02em;
+  box-shadow: 0 4px 16px rgba(14,165,233,.35);
+  touch-action: manipulation;
+}
+.btn:hover  { opacity: .92; box-shadow: 0 6px 20px rgba(14,165,233,.45); }
+.btn:active { transform: scale(.97); }
+
+/* ══════════════════════════════════
+   RESULTADO
+══════════════════════════════════ */
+#result { display: none; }
+#result.visible { display: block; }
+
+.section-title {
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(1.25rem, 3.5vw, 1.55rem);
+  font-weight: 800;
+  color: var(--text);
+  margin: 36px 0 16px;
+  line-height: 1.25;
+}
+.section-title small {
+  display: block;
+  font-family: 'Lato', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-3);
+  margin-top: 4px;
+}
+
+/* milestones */
+.milestones {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.milestone {
+  background: var(--surface);
+  border-radius: 14px;
+  padding: 16px 14px;
+  border: 1.5px solid transparent;
+  box-shadow: var(--shadow-sm);
+  transition: transform .2s, box-shadow .2s;
+}
+.milestone:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+.milestone .m-icon  { font-size: 22px; margin-bottom: 8px; line-height: 1; }
+.milestone .m-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 4px; }
+.milestone .m-date  { font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 800; color: var(--text); line-height: 1.2; }
+.milestone .m-sub   { font-size: 10.5px; color: var(--text-3); margin-top: 3px; line-height: 1.4; }
+
+.milestone.type-birth { border-color: var(--border); }
+.milestone.type-birth .m-label { color: var(--gray-c); }
+.milestone.type-dpp   { border-color: #FDE68A; background: var(--amber-lt); }
+.milestone.type-dpp .m-label   { color: var(--amber-c); }
+.milestone.type-peak  { border-color: #FED7AA; background: var(--peak-lt); }
+.milestone.type-peak .m-label  { color: var(--peak-c); }
+.milestone.type-end   { border-color: #99F6E4; background: var(--teal-lt); }
+.milestone.type-end .m-label   { color: var(--teal-c); }
+.milestone.type-today { border-color: #BFDBFE; background: var(--blue-lt); }
+.milestone.type-today .m-label { color: var(--blue-c); }
+
+/* barra progresso */
+.progress-section {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.prog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 12px;
+  color: var(--text-3);
+  margin-bottom: 8px;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.prog-bar-bg {
+  background: var(--bg);
+  border-radius: 100px;
+  height: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.prog-bar-fill {
+  height: 100%;
+  border-radius: 100px;
+  background: linear-gradient(90deg, var(--sky-dark) 0%, var(--teal) 50%, var(--green) 100%);
+  transition: width 1.2s cubic-bezier(.4,0,.2,1);
+  width: 0%;
+}
+.prog-msg {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* gráfico */
+.chart-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: clamp(18px, 4vw, 28px);
+  border: 1px solid var(--border);
+}
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.chart-legend span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-2);
+}
+.leg-line { width: 20px; height: 3px; border-radius: 2px; flex-shrink: 0; }
+.leg-dot  { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.leg-dash { width: 20px; height: 2px; background: repeating-linear-gradient(90deg,#2563EB 0,#2563EB 4px,transparent 4px,transparent 8px); flex-shrink: 0; }
+
+#chartWrap { position: relative; width: 100%; height: clamp(240px, 45vw, 340px); }
+
+.phase-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.phase-tag  { font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; }
+
+/* ══════════════════════════════════
+   PURPLE cards
+══════════════════════════════════ */
+.purple-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+.purple-card {
+  background: var(--surface);
+  border-radius: 14px;
+  padding: 18px 16px;
+  border: 1.5px solid var(--border);
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  box-shadow: var(--shadow-sm);
+  transition: transform .2s, border-color .2s;
+}
+.purple-card:hover { transform: translateY(-2px); border-color: var(--sky); }
+.purple-letter {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  color: white;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  display: grid; place-items: center;
+  flex-shrink: 0;
+}
+.purple-card h4 { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 5px; }
+.purple-card p  { font-size: 12.5px; color: var(--text-2); line-height: 1.65; }
+
+/* ══════════════════════════════════
+   DICAS
+══════════════════════════════════ */
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+.tip-card {
+  background: var(--surface);
+  border-radius: 14px;
+  padding: 20px 16px;
+  border: 1.5px solid var(--border);
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: transform .2s;
+}
+.tip-card:hover { transform: translateY(-2px); }
+.tip-icon { font-size: 30px; margin-bottom: 10px; line-height: 1; }
+.tip-card h4 { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.tip-card p  { font-size: 12px; color: var(--text-2); line-height: 1.65; }
+
+/* FAQ */
+.faq { margin-top: 40px; }
+.faq-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.faq-q {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 16px 18px;
+  text-align: left;
+  font-family: 'Lato', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  touch-action: manipulation;
+}
+.faq-q:hover { background: var(--bg); }
+.faq-arrow { font-size: 16px; transition: transform .25s; flex-shrink: 0; color: var(--sky-dark); }
+.faq-item.open .faq-arrow { transform: rotate(180deg); }
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .3s ease, padding .3s ease;
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.7;
+  padding: 0 18px;
+}
+.faq-item.open .faq-a { max-height: 300px; padding: 0 18px 16px; }
+
+/* alerta */
+.alert-box {
+  margin-top: 24px;
+  background: #FFF7ED;
+  border-left: 4px solid var(--coral);
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  box-shadow: var(--shadow-sm);
+}
+.alert-box .al-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+.alert-box h4 { font-size: 13px; font-weight: 700; color: #C2410C; margin-bottom: 5px; }
+.alert-box p  { font-size: 12.5px; color: var(--text-2); line-height: 1.65; }
+
+/* footer */
+footer {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-3);
+  padding: 24px 20px;
+  border-top: 1px solid var(--border);
+  line-height: 1.8;
+}
+footer a { color: var(--sky-dark); text-decoration: none; }
+
+/* ══════════════════════════════════
+   ANIMAÇÕES
+══════════════════════════════════ */
+.fade-in {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fadeUp .45s ease forwards;
+}
+@keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
+.fade-in:nth-child(1){animation-delay:.04s}
+.fade-in:nth-child(2){animation-delay:.10s}
+.fade-in:nth-child(3){animation-delay:.16s}
+.fade-in:nth-child(4){animation-delay:.22s}
+.fade-in:nth-child(5){animation-delay:.28s}
+.fade-in:nth-child(6){animation-delay:.34s}
+
+/* ══════════════════════════════════
+   RESPONSIVO — MOBILE
+══════════════════════════════════ */
+@media (max-width: 600px) {
+  .form-row { grid-template-columns: 1fr; }
+  .purple-grid { grid-template-columns: 1fr; }
+  .tips-grid { grid-template-columns: 1fr 1fr; }
+  .milestones { grid-template-columns: repeat(2, 1fr); }
+  .hero-stats { gap: 10px; }
+  .hero-stat  { padding: 8px 14px; }
+}
+@media (max-width: 400px) {
+  .tips-grid  { grid-template-columns: 1fr; }
+  .milestones { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Melhorar toque em mobile */
+@media (hover: none) {
+  .milestone:hover, .purple-card:hover, .tip-card:hover { transform: none; }
+}
+
+/* Safe area para iPhones com notch */
+.container { padding-left: max(16px, env(safe-area-inset-left)); padding-right: max(16px, env(safe-area-inset-right)); }
+footer { padding-bottom: max(24px, env(safe-area-inset-bottom)); }
+</style>
+</head>
+
+<body>
+
+<!-- ══ HERO ══ -->
+<header class="hero" role="banner">
+  <div class="hero-bubble b1" aria-hidden="true"></div>
+  <div class="hero-bubble b2" aria-hidden="true"></div>
+  <div class="hero-bubble b3" aria-hidden="true"></div>
+
+  <div class="hero-tag" aria-label="Categoria">
+    <span aria-hidden="true">👶</span> Para pais e cuidadores
+  </div>
+
+  <h1>
+    Simulador do<br>
+    <span class="accent">Pico de Choro</span> do Bebê
+  </h1>
+
+  <p>
+    Descubra <strong>quando esperar</strong> o período mais intenso de choro do seu bebê — com datas reais e gráfico personalizado. Funciona para bebês prematuros!
+  </p>
+
+  <div class="hero-stats" aria-label="Dados sobre o período PURPLE">
+    <div class="hero-stat">
+      <strong>6–8 sem</strong>
+      <span>pico máximo (IC)</span>
+    </div>
+    <div class="hero-stat">
+      <strong>~4 meses</strong>
+      <span>fim do período</span>
+    </div>
+    <div class="hero-stat">
+      <strong>100%</strong>
+      <span>bebês saudáveis</span>
+    </div>
+  </div>
+</header>
+
+<main class="container" id="main-content">
+
+  <!-- ══ FORMULÁRIO ══ -->
+  <section class="form-card" aria-labelledby="form-title">
+    <div class="form-card-header">
+      <div class="form-icon" aria-hidden="true">🌱</div>
+      <div>
+        <h2 id="form-title">Dados do bebê</h2>
+        <p>Preencha para gerar o gráfico personalizado</p>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="field">
+        <label for="birthDate">Data de nascimento</label>
+        <input type="date" id="birthDate" name="birthDate"
+               aria-describedby="birthHint" autocomplete="off">
+        <p id="birthHint" class="hint">Informe a data real do parto.</p>
+      </div>
+      <div class="field">
+        <label for="gestWeeks">Semanas de gestação</label>
+        <select id="gestWeeks" name="gestWeeks" aria-describedby="gestHint">
+          <option value="">Selecione…</option>
+          <option value="40">40 semanas — a termo</option>
+          <option value="39">39 semanas</option>
+          <option value="38">38 semanas</option>
+          <option value="37">37 semanas</option>
+          <option value="36">36 semanas — pré-termo tardio</option>
+          <option value="35">35 semanas — pré-termo tardio</option>
+          <option value="34">34 semanas — pré-termo tardio</option>
+          <option value="33">33 semanas — pré-termo moderado</option>
+          <option value="32">32 semanas — pré-termo moderado</option>
+          <option value="31">31 semanas</option>
+          <option value="30">30 semanas</option>
+          <option value="29">29 semanas — muito prematuro</option>
+          <option value="28">28 semanas — muito prematuro</option>
+          <option value="27">27 semanas ou menos</option>
+        </select>
+        <p id="gestHint" class="hint">Semanas completas no momento do parto.</p>
+      </div>
+    </div>
+
+    <button class="btn" onclick="calcular()" aria-label="Calcular e mostrar gráfico do pico de choro">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Simular pico de choro
+    </button>
+  </section>
+
+  <!-- ══ RESULTADO ══ -->
+  <section id="result" aria-live="polite" aria-label="Resultado da simulação">
+
+    <h2 class="section-title">
+      Linha do tempo do seu bebê
+      <small id="subtitleInfo"></small>
+    </h2>
+
+    <div class="milestones" id="milestones" role="list" aria-label="Marcos do período PURPLE"></div>
+
+    <div class="progress-section fade-in" aria-label="Progresso no período PURPLE">
+      <div class="prog-header">
+        <span>Nascimento</span>
+        <span id="progEndLabel">Fim do PURPLE</span>
+      </div>
+      <div class="prog-bar-bg" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="progBar">
+        <div class="prog-bar-fill" id="progFill"></div>
+      </div>
+      <div class="prog-msg" id="progMsg" aria-live="polite"></div>
+    </div>
+
+    <h2 class="section-title" style="margin-top:32px">
+      Curva de intensidade do choro
+      <small>Toque ou passe o mouse sobre o gráfico para ver detalhes</small>
+    </h2>
+
+    <div class="chart-card fade-in">
+      <div class="chart-legend" role="list" aria-label="Legenda do gráfico">
+        <span role="listitem"><span class="leg-line" style="background:#8B5CF6" aria-hidden="true"></span>Curva de choro</span>
+        <span role="listitem"><span class="leg-dot"  style="background:#D97706" aria-hidden="true"></span>DPP teórica</span>
+        <span role="listitem"><span class="leg-dot"  style="background:#F97316" aria-hidden="true"></span>Pico máximo</span>
+        <span role="listitem"><span class="leg-dot"  style="background:#0D9488" aria-hidden="true"></span>Fim do PURPLE</span>
+        <span role="listitem"><span class="leg-dash"                             aria-hidden="true"></span>Hoje</span>
+      </div>
+      <div id="chartWrap">
+        <canvas id="cryChart" role="img" aria-label="Gráfico de curva de intensidade do choro por semana, com datas personalizadas">Gráfico interativo mostrando a intensidade do choro semana a semana.</canvas>
+      </div>
+      <div class="phase-tags" id="phaseTags" aria-label="Fases do período"></div>
+    </div>
+
+  </section>
+
+  <!-- ══ PERÍODO PURPLE ══ -->
+  <section class="purple-section" aria-labelledby="purple-title">
+    <h2 class="section-title" id="purple-title">
+      O que é o período PURPLE?
+      <small>Uma fase normal que todo bebê saudável atravessa</small>
+    </h2>
+
+    <p style="font-size:14px;color:var(--text-2);line-height:1.8;max-width:700px;margin-bottom:4px;">
+      O <strong>período PURPLE</strong> é quando bebês saudáveis choram mais do que em qualquer outro momento da vida. Não é doença, não é sua culpa — é o sistema nervoso do bebê amadurecendo. O nome é um acrônimo com 6 características:
+    </p>
+
+    <div class="purple-grid" role="list">
+      <article class="purple-card" role="listitem">
+        <div class="purple-letter" style="background:linear-gradient(135deg,#F97316,#EF4444)" aria-label="Letra P">P</div>
+        <div>
+          <h4>Peak — Pico crescente</h4>
+          <p>O choro aumenta gradualmente e atinge o máximo por volta das 6 a 8 semanas de idade corrigida.</p>
+        </div>
+      </article>
+      <article class="purple-card" role="listitem">
+        <div class="purple-letter" style="background:linear-gradient(135deg,#F59E0B,#F97316)" aria-label="Letra U">U</div>
+        <div>
+          <h4>Unexpected — Sem motivo</h4>
+          <p>Os episódios começam e terminam do nada, sem fome, fralda suja ou dor visível.</p>
+        </div>
+      </article>
+      <article class="purple-card" role="listitem">
+        <div class="purple-letter" style="background:linear-gradient(135deg,#8B5CF6,#6366F1)" aria-label="Letra R">R</div>
+        <div>
+          <h4>Resists — Resiste ao consolo</h4>
+          <p>Mesmo fazendo tudo certo, o bebê pode não parar. Não significa que você está errando.</p>
+        </div>
+      </article>
+      <article class="purple-card" role="listitem">
+        <div class="purple-letter" style="background:linear-gradient(135deg,#EC4899,#A855F7)" aria-label="Letra P">P</div>
+        <div>
+          <h4>Pain-like face — Cara de dor</h4>
+          <p>A expressão parece indicar dor intensa, mas geralmente não há causa física.</p>
+        </div>
+      </article>
+      <article class="purple-card" role="listitem">
+        <div class="purple-letter" style="background:linear-gradient(135deg,#10B981,#0EA5E9)" aria-label="Letra L">L</div>
+        <div>
+          <h4>Long lasting — Duradouro</h4>
+          <p>Os episódios podem durar horas. A fase em si dura semanas — mas tem fim garantido.</p>
+        </div>
+      </article>
+      <article class="purple-card" role="listitem">
+        <div class="purple-letter" style="background:linear-gradient(135deg,#0EA5E9,#2DD4BF)" aria-label="Letra E">E</div>
+        <div>
+          <h4>Evening — Tarde e noite</h4>
+          <p>O choro se concentra entre 17h e 22h, quando o sistema nervoso está mais sobrecarregado.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ══ DICAS ══ -->
+  <section aria-labelledby="tips-title">
+    <h2 class="section-title" id="tips-title">
+      O que fazer durante os episódios
+      <small>Estratégias com respaldo científico</small>
+    </h2>
+    <div class="tips-grid" role="list">
+      <article class="tip-card" role="listitem">
+        <div class="tip-icon" aria-hidden="true">🚗</div>
+        <h4>Movimento rítmico</h4>
+        <p>Colo em movimento, passeio de carro ou cadeira de balanço ativam o sistema vestibular e acalmam o SNC.</p>
+      </article>
+      <article class="tip-card" role="listitem">
+        <div class="tip-icon" aria-hidden="true">🍬</div>
+        <h4>Chupeta</h4>
+        <p>A sucção tem efeito calmante direto no cérebro, reduzindo o estresse de forma imediata e eficaz.</p>
+      </article>
+      <article class="tip-card" role="listitem">
+        <div class="tip-icon" aria-hidden="true">🌑</div>
+        <h4>Ambiente calmo</h4>
+        <p>Menos luz, menos barulho e menos gente reduzem a sobrecarga sensorial que intensifica o choro.</p>
+      </article>
+      <article class="tip-card" role="listitem">
+        <div class="tip-icon" aria-hidden="true">🫂</div>
+        <h4>Pele a pele</h4>
+        <p>O método canguru regula temperatura, frequência cardíaca e reduz o cortisol do bebê e dos pais.</p>
+      </article>
+      <article class="tip-card" role="listitem">
+        <div class="tip-icon" aria-hidden="true">🛏️</div>
+        <h4>Coloque e respire</h4>
+        <p>Se nada funcionar, coloque o bebê seguro no berço e se afaste por alguns minutos. É cuidado, não abandono.</p>
+      </article>
+      <article class="tip-card" role="listitem">
+        <div class="tip-icon" aria-hidden="true">👥</div>
+        <h4>Peça ajuda</h4>
+        <p>Reveze com parceiro, familiar ou amigo. Cuidar de si mesmo é cuidar do bebê. Você não está sozinho.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ══ FAQ ══ -->
+  <section class="faq" aria-labelledby="faq-title">
+    <h2 class="section-title" id="faq-title">
+      Perguntas frequentes
+      <small>Dúvidas comuns sobre o pico de choro</small>
+    </h2>
+    <div id="faqList">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          O pico de choro se aplica a bebês prematuros?
+          <span class="faq-arrow" aria-hidden="true">▾</span>
+        </button>
+        <div class="faq-a" role="region">
+          Sim! Para prematuros, o pico ocorre com base na <strong>idade corrigida</strong>, não na idade cronológica. Um bebê nascido com 34 semanas (6 semanas prematuro) terá o pico cerca de 6 semanas depois do que um bebê a termo — por isso a simulação ajusta automaticamente as datas.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Como calcular a idade corrigida do bebê?
+          <span class="faq-arrow" aria-hidden="true">▾</span>
+        </button>
+        <div class="faq-a" role="region">
+          A fórmula é simples: <strong>Idade corrigida = Idade cronológica − Semanas de prematuridade</strong>. Por exemplo, um bebê de 10 semanas nascido com 34 semanas tem 4 semanas de idade corrigida (10 − 6 = 4).
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          O choro intenso pode ser cólica e não o período PURPLE?
+          <span class="faq-arrow" aria-hidden="true">▾</span>
+        </button>
+        <div class="faq-a" role="region">
+          Os dois podem se sobrepor. A cólica tende a ter padrão mais regular (mesmo horário, mesmo comportamento), enquanto o choro PURPLE é mais imprevisível. Em ambos os casos, consulte o pediatra se tiver dúvidas — ele avaliará se há causa orgânica.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
+          Quando termina o pico de choro do bebê?
+          <span class="faq-arrow" aria-hidden="true">▾</span>
+        </button>
+        <div class="faq-a" role="region">
+          O período PURPLE encerra em torno das <strong>16 semanas de idade corrigida</strong> — geralmente entre 3 e 4 meses. Após isso, o bebê começa a sorrir mais, dormir em períodos mais longos e responder melhor ao consolo.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- alerta médico -->
+  <div class="alert-box" role="alert">
+    <div class="al-icon" aria-hidden="true">⚠️</div>
+    <div>
+      <h4>Quando buscar atendimento médico</h4>
+      <p>O choro PURPLE não é acompanhado de: febre, vômitos persistentes, recusa alimentar prolongada, choro monótono absolutamente ininterrupto, ou alteração na cor da pele (pálida, azulada). Se qualquer um desses sinais aparecer, consulte o pediatra.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer role="contentinfo">
+  <p>Baseado no modelo <strong>Período PURPLE</strong> — Dr. Ronald Barr, SickKids Hospital</p>
+  <p>Ferramenta educativa — não substitui orientação médica profissional.</p>
+</footer>
+
+<script>
+"use strict";
+let chartInstance = null;
+
+function addDays(d, n) { const r = new Date(d); r.setDate(r.getDate() + n); return r; }
+function addWeeks(d, w) { return addDays(d, w * 7); }
+function fmt(d) { return d.toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit', year:'numeric' }); }
+function fmtShort(d) { return d.toLocaleDateString('pt-BR', { day:'2-digit', month:'short' }); }
+function weeksBetween(a, b) { return (b - a) / (7 * 86400000); }
+function daysBetween(a, b) { return Math.floor((b - a) / 86400000); }
+
+function intensity(week, premWeeks) {
+  const ic = week - premWeeks;
+  let v;
+  if      (ic <= 0)   v = 10 + week * 3;
+  else if (ic <= 6)   v = 28 + (ic / 6) * 62;
+  else if (ic <= 8)   v = 90 + Math.sin((ic - 6) / 2 * Math.PI) * 10;
+  else if (ic <= 16)  v = 100 - ((ic - 8) / 8) * 72;
+  else                v = 28 - Math.min((ic - 16) / 6, 1) * 18;
+  return Math.max(8, Math.round(v));
+}
+
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const open = item.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open);
+}
+
+function calcular() {
+  const bdVal   = document.getElementById('birthDate').value;
+  const gestVal = document.getElementById('gestWeeks').value;
+  if (!bdVal || !gestVal) {
+    alert('Por favor, preencha a data de nascimento e as semanas de gestação.');
+    return;
+  }
+
+  const birth     = new Date(bdVal + 'T12:00:00');
+  const gest      = parseInt(gestVal);
+  const premWeeks = Math.max(0, 40 - gest);
+
+  const dpp       = addWeeks(birth, premWeeks);
+  const peakStart = addWeeks(birth, premWeeks + 6);
+  const peakEnd   = addWeeks(birth, premWeeks + 8);
+  const purpleEnd = addWeeks(birth, premWeeks + 16);
+  const today     = new Date(); today.setHours(12,0,0,0);
+
+  const chronoToday = Math.max(0, Math.floor(weeksBetween(birth, today)));
+  const icToday     = Math.max(0, Math.floor(weeksBetween(dpp, today)));
+  const totalDays   = daysBetween(birth, purpleEnd);
+  const elapsed     = Math.min(daysBetween(birth, today), totalDays);
+  const pct         = Math.min(100, Math.round((elapsed / totalDays) * 100));
+
+  let fase, faseMsg;
+  if (today < birth) {
+    fase = 'before'; faseMsg = 'O bebê ainda não nasceu.';
+  } else if (today < peakStart) {
+    const d = daysBetween(today, peakStart);
+    fase = 'rising'; faseMsg = `↑ Fase de escalada — o pico começa em ${d} dias (${fmtShort(peakStart)}).`;
+  } else if (today <= peakEnd) {
+    const d = daysBetween(today, peakEnd);
+    fase = 'peak'; faseMsg = `⚡ Pico máximo agora — o momento mais intenso. Dura mais ${d} dias (até ${fmtShort(peakEnd)}).`;
+  } else if (today <= purpleEnd) {
+    const d = daysBetween(today, purpleEnd);
+    fase = 'falling'; faseMsg = `↓ Fase de declínio — o mais difícil já passou! Fim em ${d} dias (${fmtShort(purpleEnd)}).`;
+  } else {
+    fase = 'done'; faseMsg = `✓ Período PURPLE encerrado — parabéns, você passou por isso!`;
+  }
+
+  document.getElementById('subtitleInfo').textContent =
+    gest < 40
+      ? `Nascido em ${fmt(birth)} · ${gest} semanas · ${premWeeks} sem prematuro`
+      : `Nascido em ${fmt(birth)} · A termo (40 semanas)`;
+
+  // Milestones
+  const ms = document.getElementById('milestones');
+  ms.innerHTML = '';
+  const msData = [
+    { type:'birth', icon:'🌱', label:'Nascimento',       date:birth,      sub:`${gest} semanas de gestação` },
+    ...(premWeeks>0 ? [{ type:'dpp', icon:'📅', label:'DPP teórica', date:dpp, sub:'IC começa a correr daqui' }] : []),
+    { type:'peak',  icon:'⚡', label:'Início do pico',   date:peakStart,  sub:'IC 6 semanas' },
+    { type:'peak',  icon:'🔥', label:'Fim do pico',      date:peakEnd,    sub:'IC 8 semanas' },
+    { type:'end',   icon:'🌤️',label:'Fim do PURPLE',    date:purpleEnd,  sub:'IC ~16 semanas' },
+    { type:'today', icon:'📍', label:'Hoje',             date:today,      sub:`${chronoToday} sem crono · IC ${icToday} sem` },
+  ];
+  msData.forEach((m,i) => {
+    const div = document.createElement('div');
+    div.className = `milestone type-${m.type} fade-in`;
+    div.setAttribute('role','listitem');
+    div.style.animationDelay = (i * 0.07) + 's';
+    div.innerHTML = `<div class="m-icon" aria-hidden="true">${m.icon}</div>
+      <div class="m-label">${m.label}</div>
+      <div class="m-date">${fmtShort(m.date)}</div>
+      <div class="m-sub">${m.sub}</div>`;
+    ms.appendChild(div);
+  });
+
+  // Progresso
+  document.getElementById('progEndLabel').textContent = `Fim PURPLE · ${fmtShort(purpleEnd)}`;
+  document.getElementById('progBar').setAttribute('aria-valuenow', pct);
+  setTimeout(() => { document.getElementById('progFill').style.width = pct + '%'; }, 300);
+  const fc = { before:'#94A3B8', rising:'#8B5CF6', peak:'#F97316', falling:'#0D9488', done:'#0D9488' };
+  document.getElementById('progMsg').innerHTML = `<span style="color:${fc[fase]}">${faseMsg}</span>`;
+
+  // Gráfico
+  const totalWeeks = premWeeks + 22;
+  const labels=[], data=[], pointColors=[], pointRadius=[], pointBorderW=[];
+  const idx = { dpp:-1, peakStart:-1, peakEnd:-1, end:-1, today:-1 };
+
+  for (let w=0; w<=totalWeeks; w+=0.5) {
+    const d = addWeeks(birth, w);
+    labels.push(fmtShort(d));
+    data.push(intensity(w, premWeeks));
+    if (Math.abs(w - premWeeks)         < 0.3)               idx.dpp       = labels.length-1;
+    if (Math.abs(w - (premWeeks+6))     < 0.3)               idx.peakStart = labels.length-1;
+    if (Math.abs(w - (premWeeks+8))     < 0.3)               idx.peakEnd   = labels.length-1;
+    if (Math.abs(w - (premWeeks+16))    < 0.3)               idx.end       = labels.length-1;
+    if (Math.abs(weeksBetween(birth,today)-w)<0.3 && idx.today<0) idx.today = labels.length-1;
+  }
+
+  labels.forEach((_,i) => {
+    if      (i===idx.today)                          { pointColors.push('#2563EB'); pointRadius.push(7); pointBorderW.push(2); }
+    else if (i===idx.peakStart||i===idx.peakEnd)     { pointColors.push('#F97316'); pointRadius.push(7); pointBorderW.push(2); }
+    else if (i===idx.end)                            { pointColors.push('#0D9488'); pointRadius.push(7); pointBorderW.push(2); }
+    else if (premWeeks>0 && i===idx.dpp)             { pointColors.push('#D97706'); pointRadius.push(6); pointBorderW.push(2); }
+    else                                             { pointColors.push('transparent'); pointRadius.push(0); pointBorderW.push(0); }
+  });
+
+  if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
+
+  const annotations = {
+    id:'annotations',
+    afterDraw(chart) {
+      const {ctx, chartArea:ca, scales} = chart;
+      if (!ca) return;
+      // zona pico
+      if (idx.peakStart>=0 && idx.peakEnd>=0) {
+        ctx.save();
+        ctx.fillStyle = 'rgba(249,115,22,.09)';
+        ctx.fillRect(scales.x.getPixelForValue(idx.peakStart), ca.top, scales.x.getPixelForValue(idx.peakEnd)-scales.x.getPixelForValue(idx.peakStart), ca.bottom-ca.top);
+        ctx.restore();
+      }
+      // linha hoje
+      if (idx.today>=0) {
+        const xT = scales.x.getPixelForValue(idx.today);
+        ctx.save(); ctx.setLineDash([5,4]); ctx.strokeStyle='rgba(37,99,235,.55)'; ctx.lineWidth=1.5;
+        ctx.beginPath(); ctx.moveTo(xT,ca.top); ctx.lineTo(xT,ca.bottom); ctx.stroke(); ctx.restore();
+      }
+      // anotações texto
+      function ann(i, lines, color, align) {
+        if (i<0) return;
+        const x = scales.x.getPixelForValue(i);
+        ctx.save(); ctx.font='600 10px Lato,sans-serif'; ctx.fillStyle=color;
+        ctx.textAlign = align||'center';
+        const ox = align==='left'?6:align==='right'?-6:0;
+        lines.forEach((ln,li)=>ctx.fillText(ln, x+ox, ca.top+12+li*13));
+        ctx.restore();
+      }
+      if (premWeeks>0) ann(idx.dpp, ['DPP', fmtShort(dpp)], '#D97706');
+      ann(idx.today,     ['Hoje', fmtShort(today)],          '#2563EB','left');
+      ann(idx.peakStart, ['Início pico', fmtShort(peakStart)],'#F97316');
+      ann(idx.peakEnd,   ['Fim pico', fmtShort(peakEnd)],    '#F97316');
+      ann(idx.end,       ['Fim PURPLE', fmtShort(purpleEnd)],'#0D9488','right');
+    }
+  };
+
+  const ctx2 = document.getElementById('cryChart').getContext('2d');
+  chartInstance = new Chart(ctx2, {
+    type:'line',
+    data:{
+      labels,
+      datasets:[{
+        label:'Intensidade do choro',
+        data,
+        borderColor:'#8B5CF6',
+        borderWidth:2.5,
+        tension:0.42,
+        fill:true,
+        backgroundColor:'rgba(139,92,246,.08)',
+        pointBackgroundColor:pointColors,
+        pointBorderColor:pointColors.map(c=>c==='transparent'?'transparent':'white'),
+        pointRadius,
+        pointBorderWidth:pointBorderW,
+        pointHoverRadius:6,
+      }]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      interaction:{ mode:'index', intersect:false },
+      plugins:{
+        legend:{ display:false },
+        tooltip:{
+          backgroundColor:'#1E293B',
+          titleColor:'#F8FAFC',
+          bodyColor:'rgba(248,250,252,.72)',
+          padding:12,
+          cornerRadius:10,
+          titleFont:{ family:'Lato', size:12, weight:'700' },
+          bodyFont:{ family:'Lato', size:11 },
+          callbacks:{
+            title: items => {
+              const w = items[0].dataIndex * 0.5;
+              return addWeeks(birth,w).toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric'});
+            },
+            label: item => {
+              const w = item.dataIndex*0.5;
+              const ic = Math.max(0, w-premWeeks);
+              return [` Intensidade: ${item.raw}%`, ` Semana crono: ${Math.floor(w)}`, ` IC: ${Math.floor(ic)} semanas`];
+            }
+          }
+        }
+      },
+      scales:{
+        x:{
+          ticks:{ maxRotation:45, autoSkip:true, maxTicksLimit:12, color:'#94A3B8', font:{family:'Lato',size:10} },
+          grid:{ color:'rgba(148,163,184,.12)' },
+          title:{ display:true, text:'Semanas a partir do nascimento', color:'#94A3B8', font:{family:'Lato',size:11} }
+        },
+        y:{
+          min:0, max:115,
+          ticks:{ color:'#94A3B8', font:{family:'Lato',size:10}, callback:v=>v<=100?v+'%':'' },
+          grid:{ color:'rgba(148,163,184,.12)' },
+          title:{ display:true, text:'Intensidade do choro', color:'#94A3B8', font:{family:'Lato',size:11} }
+        }
+      }
+    },
+    plugins:[annotations]
+  });
+
+  // Tags fases
+  const tc = document.getElementById('phaseTags');
+  tc.innerHTML = '';
+  [
+    { label:`Escalada: ${fmtShort(birth)} → ${fmtShort(peakStart)}`, color:'#6D28D9', bg:'#EDE9FE' },
+    { label:`Pico: ${fmtShort(peakStart)} → ${fmtShort(peakEnd)}`,   color:'#C2410C', bg:'#FEF3C7' },
+    { label:`Declínio: ${fmtShort(peakEnd)} → ${fmtShort(purpleEnd)}`,color:'#0F766E', bg:'#CCFBF1' },
+  ].forEach(t => {
+    const s = document.createElement('span');
+    s.className = 'phase-tag';
+    s.style.cssText = `color:${t.color};background:${t.bg}`;
+    s.textContent = t.label;
+    tc.appendChild(s);
+  });
+
+  const res = document.getElementById('result');
+  res.classList.add('visible');
+  setTimeout(()=>{ res.scrollIntoView({ behavior:'smooth', block:'start' }); }, 100);
+}
+
+// Bloquear datas futuras
+document.getElementById('birthDate').max = new Date().toISOString().split('T')[0];
+</script>
+</body>
+</html>
