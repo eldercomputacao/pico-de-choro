@@ -145,20 +145,37 @@ function calcular() {
         ctx.beginPath(); ctx.moveTo(xT,ca.top); ctx.lineTo(xT,ca.bottom); ctx.stroke(); ctx.restore();
       }
       // anotações texto
-      function ann(i, lines, color, align) {
+      const isMobile = (ca.right - ca.left) < 380;
+      const fontSize = isMobile ? 9 : 10;
+      const lineH    = isMobile ? 12 : 13;
+
+      function ann(i, lines, color, align, yOffset) {
         if (i<0) return;
-        const x = scales.x.getPixelForValue(i);
-        ctx.save(); ctx.font='600 10px Lato,sans-serif'; ctx.fillStyle=color;
-        ctx.textAlign = align||'center';
-        const ox = align==='left'?6:align==='right'?-6:0;
-        lines.forEach((ln,li)=>ctx.fillText(ln, x+ox, ca.top+12+li*13));
+        const x  = scales.x.getPixelForValue(i);
+        const ox = align==='left' ? 5 : align==='right' ? -5 : 0;
+        const yBase = ca.top + fontSize + 4 + (yOffset || 0);
+        ctx.save();
+        ctx.font = `700 ${fontSize}px Lato,sans-serif`;
+        ctx.textAlign = align || 'center';
+
+        ctx.strokeStyle = 'rgba(255,255,255,0.95)';
+        ctx.lineWidth   = 4;
+        ctx.lineJoin    = 'round';
+        lines.forEach((ln, li) => ctx.strokeText(ln, x + ox, yBase + li * lineH));
+
+        ctx.fillStyle = color;
+        lines.forEach((ln, li) => ctx.fillText(ln, x + ox, yBase + li * lineH));
         ctx.restore();
       }
-      if (premWeeks>0) ann(idx.dpp, ['DPP', fmtShort(dpp)], '#D97706');
-      ann(idx.today,     ['Hoje', fmtShort(today)],          '#2563EB','left');
-      ann(idx.peakStart, ['Início pico', fmtShort(peakStart)],'#F97316');
-      ann(idx.peakEnd,   ['Fim pico', fmtShort(peakEnd)],    '#F97316');
-      ann(idx.end,       ['Fim PURPLE', fmtShort(purpleEnd)],'#0D9488','right');
+
+      const peakLabelStart = isMobile ? ['↑ Pico', fmtShort(peakStart)] : ['Início pico', fmtShort(peakStart)];
+      const peakLabelEnd   = isMobile ? ['↓ Pico', fmtShort(peakEnd)]   : ['Fim pico',    fmtShort(peakEnd)];
+
+      if (premWeeks>0) ann(idx.dpp,       ['DPP', fmtShort(dpp)],         '#D97706');
+      ann(idx.today,     ['Hoje', fmtShort(today)],                        '#2563EB', 'left');
+      ann(idx.peakStart, peakLabelStart,                                   '#F97316', 'center', 0);
+      ann(idx.peakEnd,   peakLabelEnd,                                     '#F97316', 'center', isMobile ? 28 : 0);
+      ann(idx.end,       ['Fim PURPLE', fmtShort(purpleEnd)],              '#0D9488', 'right');
     }
   };
 
