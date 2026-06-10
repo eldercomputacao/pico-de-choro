@@ -25,6 +25,7 @@ Três arquivos de código, sem dependências de build:
 | `index.html` | Estrutura semântica, SEO (meta tags, Schema.org, FAQ schema), Chart.js via CDN |
 | `style.css` | Design system baseado em CSS custom properties (`--sky`, `--teal`, etc.), layout responsivo com CSS Grid e `clamp()` |
 | `script.js` | Toda a lógica: cálculo de IC, geração do gráfico Chart.js, milestones e barra de progresso |
+| `favicon.svg` | Ícone SVG da chupeta em fundo circular com gradiente azul→teal; referenciado no `<head>` via `<link rel="icon">` |
 
 ### Lógica central (`script.js`)
 
