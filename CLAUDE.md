@@ -20,12 +20,19 @@ npx serve .
 
 Três arquivos de código, sem dependências de build:
 
-| Arquivo | Papel |
+| Arquivo / Pasta | Papel |
 |---|---|
 | `index.html` | Estrutura semântica, SEO (meta tags, Schema.org, FAQ schema), Chart.js via CDN |
-| `style.css` | Design system baseado em CSS custom properties (`--sky`, `--teal`, etc.), layout responsivo com CSS Grid e `clamp()` |
-| `script.js` | Toda a lógica: cálculo de IC, geração do gráfico Chart.js, milestones e barra de progresso |
-| `favicon.svg` | Ícone SVG da chupeta em fundo circular com gradiente azul→teal; referenciado no `<head>` via `<link rel="icon">` |
+| `manifest.json` | PWA manifest — nome, ícones e modo standalone para "Adicionar à tela inicial" |
+| `robots.txt` | Libera crawlers e aponta para o sitemap |
+| `sitemap.xml` | Mapa do site para indexação no Google |
+| `css/style.css` | Design system baseado em CSS custom properties (`--sky`, `--teal`, etc.), layout responsivo com CSS Grid e `clamp()` |
+| `js/script.js` | Toda a lógica: cálculo de IC, geração do gráfico Chart.js, milestones e barra de progresso |
+| `assets/favicon.svg` | Ícone SVG da chupeta em fundo circular com gradiente azul→teal |
+| `assets/social-card.png` | Imagem 1200×630px para preview no WhatsApp, Facebook e Twitter (`og:image`) |
+| `assets/icon-192.png` | Ícone PWA para Android/Chrome |
+| `assets/icon-512.png` | Ícone PWA para Android/Chrome (alta resolução) |
+| `assets/apple-touch-icon.png` | Ícone 180px para iOS Safari "Adicionar à Tela de Início" |
 
 ### Lógica central (`script.js`)
 
